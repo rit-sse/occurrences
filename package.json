@@ -4,7 +4,9 @@
   "description": "Events application for the SSE",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www",
+    "watch": "nodemon ./bin/www",
+    "keygen": "node ./keygen.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,14 @@
   "bugs": {
     "url": "https://github.com/rit-sse/occurrences/issues"
   },
-  "homepage": "https://github.com/rit-sse/occurrences"
+  "homepage": "https://github.com/rit-sse/occurrences",
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "cors": "^2.5.3",
+    "express": "^4.12.3",
+    "express-jwt": "^2.1.0",
+    "keypair": "^1.0.0",
+    "mongoose": "^3.8.25",
+    "morgan": "^1.5.2"
+  }
 }
