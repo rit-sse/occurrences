@@ -4,7 +4,6 @@ var logger = require('morgan');
 var cors = require('cors');
 var env = process.env.NODE_ENV || 'development';
 
-// var routes =
 var jwt = require('express-jwt');
 
 var fs = require('fs');
@@ -20,7 +19,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 require('./routes')();
 
 // error handlers
-
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
@@ -32,7 +30,7 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500).send('internal server error!');
   }
   else {
-  	console.log(err.stack);
+    console.log(err.stack);
     res.status(err.status || 500).send(err);
   }
 });
