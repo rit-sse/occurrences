@@ -6,7 +6,11 @@ var Committee = Waterline.Collection.extend({
   connection: 'database',
 
   attributes: {
-    name: 'string',
+    name: {
+      type: 'string',
+      unique: true,
+      required: true
+    },
 
     events: {
       collection: 'event',

@@ -1,15 +1,17 @@
 var diskAdapter = require('sails-disk');
 var postgresAdapter = require('sails-postgresql');
+var memoryAdapter = require('sails-memory');
 
 var env = process.env.NODE_ENV || 'development';
 
 var dbConfig = require('./database')[env];
+var orm = require('../models');
 
-
-module.exports = {
+var config = {
   adapters: {
     disk: diskAdapter,
-    postgres: postgresAdapter
+    postgres: postgresAdapter,
+    memory: memoryAdapter
   },
 
   connections: {
@@ -21,3 +23,6 @@ module.exports = {
   }
 };
 
+module.exports = function(callback) {
+  orm.initialize(config, callback);
+}

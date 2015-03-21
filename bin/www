@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
 var app = require('../app');
-var orm = require('../models');
-var config = require('../config/waterline');
+var connect = require('../config/waterline');
 
 app.set('port', process.env.PORT || 3000);
 
-orm.initialize(config, function(err, models) {
+connect(function(err, models) {
   if(err) throw err;
 
   app.models = models.collections;

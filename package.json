@@ -7,7 +7,7 @@
     "start": "node ./bin/www",
     "watch": "nodemon ./bin/www",
     "keygen": "node ./keygen.js",
-    "test": "mocaha --recursive"
+    "test": "NODE_ENV=test mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/rit-sse/occurrences",
   "dependencies": {
+    "bluebird": "^2.9.14",
     "body-parser": "^1.12.2",
     "cors": "^2.5.3",
     "express": "^4.12.3",
@@ -27,11 +28,13 @@
     "keypair": "^1.0.0",
     "morgan": "^1.5.2",
     "sails-disk": "^0.10.7",
+    "sails-memory": "^0.10.3",
     "sails-postgresql": "^0.10.14",
     "waterline": "^0.10.18"
   },
   "devDependencies": {
     "chai": "^2.1.2",
+    "chai-as-promised": "^4.3.0",
     "mocha": "^2.2.1"
   }
 }

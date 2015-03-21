@@ -15,6 +15,7 @@ var Event = Waterline.Collection.extend({
     short_description: 'string',
     image: 'string',
     featured: 'boolean',
+    recurrence: 'string',
 
     committee: {
       model: 'committee'
