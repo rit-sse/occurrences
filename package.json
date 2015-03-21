@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "watch": "nodemon ./bin/www",
-    "keygen": "node ./keygen.js"
+    "keygen": "node ./keygen.js",
+    "test": "mocaha --recursive"
   },
   "repository": {
     "type": "git",
@@ -28,5 +29,9 @@
     "sails-disk": "^0.10.7",
     "sails-postgresql": "^0.10.14",
     "waterline": "^0.10.18"
+  },
+  "devDependencies": {
+    "chai": "^2.1.2",
+    "mocha": "^2.2.1"
   }
 }
