@@ -1,14 +1,34 @@
 var chai = require('chai');
 var expect = chai.expect;
 
-describe('Event', function() {
-  describe('name', function() {
-    context('when present', function(){
-      it('should save');
-    });
+var connectToDb = require('../helper');
+var models = {};
 
+var events = require('../fixtures/events');
+
+describe('Event', function() {
+  connectToDb(models);
+
+  context('when everything is present', function(){
+    it('should save', function(){
+      var eventParams = new events.FeaturedEvent();
+      var Event = models.event;
+      var ePromise = Event.create(eventParams);
+
+      return expect(ePromise).to.eventually.be.ok;
+    });
+  });
+
+  describe('name', function() {
     context('when not present', function(){
-      it('should not save');
+      it('should not save', function(){
+        var eventParams = new events.FeaturedEvent();
+        eventParams.name = null;
+        var Event = models.event;
+        var ePromise = Event.create(eventParams);
+
+        return expect(ePromise).to.eventually.be.rejected;
+      });
     });
   });
 

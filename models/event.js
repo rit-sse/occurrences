@@ -6,7 +6,10 @@ var Event = Waterline.Collection.extend({
   connection: 'database',
 
   attributes: {
-    name: 'string',
+    name: {
+      type: 'string',
+      required: true
+    },
     start_date: 'date',
     end_date: 'date',
     description: 'text',
