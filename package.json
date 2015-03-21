@@ -24,7 +24,9 @@
     "express": "^4.12.3",
     "express-jwt": "^2.1.0",
     "keypair": "^1.0.0",
-    "mongoose": "^3.8.25",
-    "morgan": "^1.5.2"
+    "morgan": "^1.5.2",
+    "sails-disk": "^0.10.7",
+    "sails-postgresql": "^0.10.14",
+    "waterline": "^0.10.18"
   }
 }

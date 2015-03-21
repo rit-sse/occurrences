@@ -2,11 +2,10 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var logger = require('morgan');
 var cors = require('cors');
-var env = process.env.NODE_ENV || 'development';
-
 var jwt = require('express-jwt');
-
 var fs = require('fs');
+
+var env = process.env.NODE_ENV || 'development';
 
 var app = module.exports = express();
 
