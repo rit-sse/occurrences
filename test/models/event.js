@@ -156,33 +156,52 @@ describe('Event', function() {
   });
 
   describe('start_date', function() {
-    context('when not present', function(){
-      it('should not save');
+    beforeEach(function(){
+      eventParams = new events.UnfeaturedEvent();
     });
 
-    context('when start_date is before end_date', function() {
-      it('should save');
+    context('when not present', function() {
+      it('should not save', function() {
+        eventParams.start_date = null;
+        var ePromise = models.event.create(eventParams);
+
+        return expect(ePromise).to.eventually.be.rejected;
+      });
     });
 
     context('when start_date is after end_date', function() {
-      it('should not save');
+      it('should not save', function() {
+        eventParams.start_date = new Date(2014, 3, 21, 14, 30);;
+        var ePromise = models.event.create(eventParams);
+
+        return expect(ePromise).to.eventually.be.rejected;
+      });
     });
   });
 
   describe('end_date', function() {
-    context('when not present', function(){
-      it('should not save');
+    beforeEach(function(){
+      eventParams = new events.UnfeaturedEvent();
+    });
+
+    context('when not present', function() {
+      it('should not save', function() {
+        eventParams.end_date = null;
+        var ePromise = models.event.create(eventParams);
+
+        return expect(ePromise).to.eventually.be.rejected;
+      });
     });
   });
 
   describe('location', function() {
-    context('when not present', function(){
+    context('when not present', function() {
       it('should not save');
     });
   });
 
   describe('committee', function() {
-    context('when not present', function(){
+    context('when not present', function() {
       it('should not save');
     });
   });

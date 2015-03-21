@@ -10,8 +10,20 @@ var Event = Waterline.Collection.extend({
       type: 'string',
       required: true
     },
-    start_date: 'date',
-    end_date: 'date',
+    start_date: {
+      type: 'datetime',
+      required: true,
+      before: function() {
+        return this.end_date
+      }
+    },
+    end_date: {
+      type: 'datetime',
+      required: true,
+      after: function() {
+        return this.start_date
+      }
+    },
     description: 'text',
     location: 'string',
     short_name: {
