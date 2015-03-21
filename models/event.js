@@ -25,7 +25,10 @@ var Event = Waterline.Collection.extend({
       }
     },
     description: 'text',
-    location: 'string',
+    location: {
+      type: 'string',
+      required: true
+    },
     short_name: {
       type: 'string',
       required: true,
@@ -50,7 +53,8 @@ var Event = Waterline.Collection.extend({
     recurrence: 'string',
 
     committee: {
-      model: 'committee'
+      model: 'committee',
+      required: true
     }
   }
 });

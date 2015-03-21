@@ -6,20 +6,30 @@ var models = {};
 
 var events = require('../fixtures/events');
 var eventParams;
+var committee;
 
 describe('Event', function() {
   connectToDb(models);
 
+  beforeEach(function(){
+    return models
+      .committee
+      .create({ name: 'committee' })
+      .then(function(c){
+        committee = c.id;
+      });
+  })
+
   context('when everything is present', function(){
     it('featured should save', function(){
-      eventParams = new events.FeaturedEvent();
+      eventParams = new events.FeaturedEvent(committee);
       var ePromise =  models.event.create(eventParams);
 
       return expect(ePromise).to.eventually.be.ok;
     });
 
     it('unfeatured should save', function(){
-      eventParams = new events.UnfeaturedEvent();
+      eventParams = new events.UnfeaturedEvent(committee);
       var ePromise =  models.event.create(eventParams);
 
       return expect(ePromise).to.eventually.be.ok;
@@ -29,7 +39,7 @@ describe('Event', function() {
   describe('name', function() {
     context('when not present', function(){
       it('should not save', function(){
-        eventParams = new events.FeaturedEvent();
+        eventParams = new events.FeaturedEvent(committee);
         eventParams.name = null;
         var ePromise =  models.event.create(eventParams);
 
@@ -40,7 +50,7 @@ describe('Event', function() {
 
   describe('short_name', function() {
     beforeEach(function(){
-      eventParams = new events.FeaturedEvent();
+      eventParams = new events.FeaturedEvent(committee);
     });
 
     context('when not present', function(){
@@ -73,7 +83,7 @@ describe('Event', function() {
 
   describe('short_description', function() {
     beforeEach(function(){
-      eventParams = new events.UnfeaturedEvent();
+      eventParams = new events.UnfeaturedEvent(committee);
     });
 
     context('when not present', function() {
@@ -108,7 +118,7 @@ describe('Event', function() {
 
     context('when true', function() {
       beforeEach(function(){
-        eventParams = new events.FeaturedEvent();
+        eventParams = new events.FeaturedEvent(committee);
       });
 
       context('image is not present', function() {
@@ -132,7 +142,7 @@ describe('Event', function() {
 
     context('when false', function() {
       beforeEach(function(){
-        eventParams = new events.UnfeaturedEvent();
+        eventParams = new events.UnfeaturedEvent(committee);
       });
 
       context('image is not present', function() {
@@ -157,7 +167,7 @@ describe('Event', function() {
 
   describe('start_date', function() {
     beforeEach(function(){
-      eventParams = new events.UnfeaturedEvent();
+      eventParams = new events.UnfeaturedEvent(committee);
     });
 
     context('when not present', function() {
@@ -181,7 +191,7 @@ describe('Event', function() {
 
   describe('end_date', function() {
     beforeEach(function(){
-      eventParams = new events.UnfeaturedEvent();
+      eventParams = new events.UnfeaturedEvent(committee);
     });
 
     context('when not present', function() {
@@ -196,13 +206,25 @@ describe('Event', function() {
 
   describe('location', function() {
     context('when not present', function() {
-      it('should not save');
+      it('should not save', function() {
+        eventParams = new events.UnfeaturedEvent(committee);
+        eventParams.location = null;
+        var ePromise = models.event.create(eventParams);
+
+        return expect(ePromise).to.eventually.be.rejected;
+      });
     });
   });
 
   describe('committee', function() {
     context('when not present', function() {
-      it('should not save');
+      it('should not save', function() {
+        eventParams = new events.UnfeaturedEvent(committee);
+        eventParams.location = null;
+        var ePromise = models.event.create(eventParams);
+
+        return expect(ePromise).to.eventually.be.rejected;
+      });
     });
   });
 });

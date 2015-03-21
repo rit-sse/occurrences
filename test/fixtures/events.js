@@ -1,5 +1,5 @@
 module.exports = {
-  FeaturedEvent: function() {
+  FeaturedEvent: function(committeeId) {
     this.name = 'Event Name 1';
     this.start_date = new Date(2014, 3, 21, 12, 30);
     this.end_date = new Date(2014, 3, 21, 13, 30);
@@ -10,9 +10,10 @@ module.exports = {
     this.image = 'path/to/image';
     this.featured = true;
     this.recurrence = 'well i will deal with this later';
+    this.committee = committeeId;
   },
 
-  UnfeaturedEvent: function() {
+  UnfeaturedEvent: function(committeeId) {
     this.name = 'Event Name 2';
     this.start_date = new Date(2014, 3, 21, 12, 30);
     this.end_date = new Date(2014, 3, 21, 13, 30);
@@ -21,5 +22,6 @@ module.exports = {
     this.short_name = 'event';
     this.featured = false;
     this.recurrence = 'well i will deal with this late';
+    this.committee = committeeId;
   }
 }
