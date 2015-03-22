@@ -57,7 +57,12 @@ router
         });
     })
     .delete(function(req, res, next) {
-
+      req.models
+        .committee
+        .destroy(req.params.id)
+        .then(function(){
+          res.status(204).send();
+        })
     });
 
 module.exports = router;
