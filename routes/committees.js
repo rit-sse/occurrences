@@ -30,7 +30,19 @@ router
 router
   .route('/:id')
     .get(function(req, res, next) {
-
+      req.models
+        .committee
+        .findOne(req.params.id)
+        .then(function(committee){
+          if(!committee) {
+            next({
+              status: 404,
+              message: 'Committee with id ' + req.params.id + ' not found'
+            });
+          } else {
+            res.send(committee);
+          }
+        });
     })
     .put(function(req, res, next) {
 
