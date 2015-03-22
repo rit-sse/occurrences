@@ -1,4 +1,5 @@
 var Waterline = require('waterline');
+var ICal = require('../helpers/ical')
 
 var Event = Waterline.Collection.extend({
 
@@ -55,6 +56,14 @@ var Event = Waterline.Collection.extend({
     committee: {
       model: 'committee',
       required: true
+    },
+
+    end_date_string: function() {
+      return this.end_date.toISOString().replace(/-/g, '').replace(/:/g, '').split('.')[0]
+    },
+
+    start_date_string: function() {
+      return this.start_date.toISOString().replace(/-/g, '').replace(/:/g, '').split('.')[0]
     }
   }
 });

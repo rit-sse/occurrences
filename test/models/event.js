@@ -8,6 +8,8 @@ var events = require('../fixtures/events');
 var eventParams;
 var committee;
 
+var ical = require('../../helpers/ical')
+
 describe('Event', function() {
   connectToDb(models);
 
@@ -23,7 +25,9 @@ describe('Event', function() {
   context('when everything is present', function(){
     it('featured should save', function(){
       eventParams = new events.FeaturedEvent(committee);
-      var ePromise =  models.event.create(eventParams);
+      var ePromise =  models
+        .event
+        .create(eventParams)
 
       return expect(ePromise).to.eventually.be.ok;
     });
