@@ -1,4 +1,5 @@
 var Waterline = require('waterline');
+var ICal = require('../helpers/ical')
 
 var Event = Waterline.Collection.extend({
 
@@ -6,18 +7,63 @@ var Event = Waterline.Collection.extend({
   connection: 'database',
 
   attributes: {
-    name: 'string',
-    start_date: 'date',
-    end_date: 'date',
+    name: {
+      type: 'string',
+      required: true
+    },
+    start_date: {
+      type: 'datetime',
+      required: true,
+      before: function() {
+        return this.end_date
+      }
+    },
+    end_date: {
+      type: 'datetime',
+      required: true,
+      after: function() {
+        return this.start_date
+      }
+    },
     description: 'text',
-    location: 'string',
-    short_name: 'string',
-    short_description: 'string',
-    image: 'string',
+    location: {
+      type: 'string',
+      required: true
+    },
+    short_name: {
+      type: 'string',
+      required: true,
+      minLength: 1,
+      maxLength: 25
+    },
+    short_description: {
+      type: 'string',
+      minLength: 40,
+      maxLength: 70,
+      required: function() {
+        return this.featured;
+      }
+    },
+    image: {
+      type: 'string',
+      required: function() {
+        return this.featured;
+      }
+    },
     featured: 'boolean',
+    recurrence: 'string',
 
     committee: {
-      model: 'committee'
+      model: 'committee',
+      required: true
+    },
+
+    end_date_string: function() {
+      return this.end_date.toISOString().replace(/-/g, '').replace(/:/g, '').split('.')[0]
+    },
+
+    start_date_string: function() {
+      return this.start_date.toISOString().replace(/-/g, '').replace(/:/g, '').split('.')[0]
     }
   }
 });
