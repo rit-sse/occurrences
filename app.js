@@ -15,6 +15,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
+app.use(function(req, res, next) {
+  req.models = app.models;
+  next();
+});
+
 require('./routes')();
 
 // error handlers
