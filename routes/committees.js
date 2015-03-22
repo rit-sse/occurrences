@@ -45,7 +45,16 @@ router
         });
     })
     .put(function(req, res, next) {
-
+      req.models
+        .committee
+        .update(req.params.id, req.body.committee)
+        .then(function(committee){
+          res.send(committee);
+        })
+        .catch(function(err){
+          err.status = 422;
+          next(err);
+        });
     })
     .delete(function(req, res, next) {
 
