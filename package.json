@@ -30,11 +30,13 @@
     "sails-disk": "^0.10.7",
     "sails-memory": "^0.10.3",
     "sails-postgresql": "^0.10.14",
+    "supertest": "^0.15.0",
     "waterline": "^0.10.18"
   },
   "devDependencies": {
     "chai": "^2.1.2",
     "chai-as-promised": "^4.3.0",
-    "mocha": "^2.2.1"
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
   }
 }
