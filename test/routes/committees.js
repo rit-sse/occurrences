@@ -14,18 +14,34 @@ describe('/api/committtees', function() {
   connectToDb(models);
 
   beforeEach(function(){
+    app.models = models;
     return models
       .committee
       .create({ name: 'committee' });
   });
 
   describe('GET /', function() {
-    before(function() {
+    beforeEach(function() {
       req = agent.get('/api/committees');
     });
-    it('should respond with json');
-    it('should have the status 200');
-    it('should be of length 1');
+
+    it('should respond with json', function(done) {
+      return req
+        .expect('Content-Type', /json/, done);
+    });
+    it('should have the status 200', function(done) {
+      return req
+        .expect(200, done);
+    });
+    it('should be of length 1', function(done) {
+      return req
+        .expect(function(res){
+          if(res.body.length !== 1){
+            return "Length is incorrect"
+          }
+        })
+        .end(done)
+    });
   });
 
   describe('POST /', function() {
