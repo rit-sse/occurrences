@@ -4,18 +4,18 @@ var request = require('supertest');
 var app = require('../../app.js');
 var connectToDb = require('../helper');
 
-var models = {};
+app.models = {};
 var agent = request(app);
 var expect = chai.expect;
 var req;
 
 describe('/api/committtees', function() {
 
-  connectToDb(models);
+  connectToDb(app.models);
 
   beforeEach(function(){
-    app.models = models;
-    return models
+    return app
+      .models
       .committee
       .create({ name: 'committee' });
   });
@@ -26,18 +26,18 @@ describe('/api/committtees', function() {
     });
 
     it('should respond with json', function(done) {
-      return req
+      req
         .expect('Content-Type', /json/, done);
     });
     it('should have the status 200', function(done) {
-      return req
+      req
         .expect(200, done);
     });
     it('should be of length 1', function(done) {
-      return req
+      req
         .expect(function(res){
           if(res.body.length !== 1){
-            return "Length is incorrect"
+            return "Length is incorrect";
           }
         })
         .end(done)
@@ -46,26 +46,70 @@ describe('/api/committtees', function() {
 
   describe('POST /', function() {
     context('when paramters are valid', function() {
-      before(function() {
+      beforeEach(function() {
         req = agent
           .post('/api/committees')
-          .send({ name: 'events'});
+          .send({ committee: { name: 'events' } });
       });
 
-      it('should respond with json');
-      it('should have the status 201');
-      it('should persist an item');
+      it('should respond with json', function(done) {
+        req
+          .expect('Content-Type', /json/, done);
+      });
+      it('should have the status 201', function(done) {
+        req
+          .expect(201, done);
+      });
+      it('should persist an item', function(done) {
+        req
+          .expect(function(res){
+            return app
+              .models
+              .committee
+              .find({})
+              .then(function(committees){
+                if(committees.length !== 2) {
+                  done(new Error("Length is incorrect"));
+                } else {
+                  done();
+                }
+              });
+          })
+          .end(function(){});
+      });
     });
 
     context('when paramters are not valid', function() {
-      before(function() {
+      beforeEach(function() {
         req = agent
           .post('/api/committees')
           .send();
       });
-      it('should respond with json');
-      it('should have the status 422');
-      it('should not persist an item');
+      it('should respond with json', function(done) {
+        req
+          .expect('Content-Type', /json/, done);
+      });
+      it('should have the status 422', function(done) {
+        req
+          .expect(422, done);
+      });
+      it('should not persist an item', function(done) {
+        req
+          .expect(function(res){
+            return app
+              .models
+              .committee
+              .find({})
+              .then(function(committees){
+                if(committees.length !== 1) {
+                  done(new Error("Length is incorrect"));
+                } else {
+                  done();
+                }
+              });
+          })
+          .end(function(){});
+      });
     });
   });
 

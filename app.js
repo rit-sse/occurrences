@@ -36,7 +36,9 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500).send('internal server error!');
   }
   else {
-    console.log(err.stack);
+    if(err.stack) {
+      console.log(err.stack);
+    }
     res.status(err.status || 500).send(err);
   }
 });

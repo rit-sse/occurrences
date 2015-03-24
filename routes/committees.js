@@ -19,7 +19,7 @@ router
         .committee
         .create(req.body.committee)
         .then(function(committee){
-          res.send(committee);
+          res.status(201).send(committee);
         })
         .catch(function(err){
           err.status = 422;
