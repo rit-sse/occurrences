@@ -83,7 +83,7 @@ describe('/api/committtees', function() {
       beforeEach(function() {
         req = agent
           .post('/api/committees')
-          .send();
+          .send({ committee: {} });
       });
       it('should respond with json', function(done) {
         req
@@ -162,23 +162,50 @@ describe('/api/committtees', function() {
       beforeEach(function() {
         req = agent
           .put('/api/committees/1')
-          .send({ name: 'events'});
+          .send({ committee: { name: 'events'} });
       });
 
-      it('should respond with json');
-      it('should have the status 200');
-      it('should update the item');
+      it('should respond with json', function(done) {
+        req
+          .expect('Content-Type', /json/, done);
+      });
+      it('should have the status 200', function(done) {
+        req
+          .expect(200, done);
+      });
+      it('should update the item', function(done) {
+        req
+          .expect(function(res){
+            return app
+              .models
+              .committee
+              .findOne(1)
+              .then(function(committee){
+                if(committee.name !== 'events') {
+                  done(new Error("Committee name didn't update"));
+                } else {
+                  done();
+                }
+              });
+          })
+          .end(function(){});
+      });
     });
 
     context('when paramters are not valid', function() {
       beforeEach(function() {
         req = agent
           .put('/api/committees/1')
-          .send();
+          .send({ committee: { name: 'committee'}});
       });
-      it('should respond with json');
-      it('should have the status 422');
-      it('should not update the item');
+      it('should respond with json', function(done) {
+        req
+          .expect('Content-Type', /json/, done);
+      });
+      it('should have the status 422', function(done){
+        req
+          .expect(422, done);
+      });
     });
   });
 
@@ -188,6 +215,27 @@ describe('/api/committtees', function() {
       req = agent.delete('/api/committees/1');
     });
 
-    it('should have status 204');
+    it('should have status 204', function(done) {
+      req
+        .expect(204, done);
+    });
+
+    it('should delete the committee', function(done) {
+        req
+          .expect(function(res){
+            return app
+              .models
+              .committee
+              .find({})
+              .then(function(committees){
+                if(committees.length !== 0) {
+                  done(new Error("Length is incorrect"));
+                } else {
+                  done();
+                }
+              });
+          })
+          .end(function(){});
+    });
   });
 });
