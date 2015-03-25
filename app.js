@@ -11,9 +11,16 @@ var app = module.exports = express();
 
 app.use(cors());
 // app.use(jwt({secret: pub}).unless({path: ['/token']}));
-app.use(logger('dev'));
+if(env === 'development') {
+  app.use(logger('dev'));
+}
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+
+app.use(function(req, res, next) {
+  req.models = app.models;
+  next();
+});
 
 require('./routes')();
 
@@ -25,11 +32,13 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(err, req, res, next) {
-  if (env != 'development') {
+  if (env === 'production') {
     res.status(err.status || 500).send('internal server error!');
   }
   else {
-    console.log(err.stack);
+    if(err.stack) {
+      console.log(err.stack);
+    }
     res.status(err.status || 500).send(err);
   }
 });
