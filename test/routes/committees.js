@@ -115,31 +115,51 @@ describe('/api/committtees', function() {
 
   describe('GET /:id', function() {
     context('when paramters are valid', function() {
-      before(function() {
+      beforeEach(function() {
         req = agent
           .get('/api/committees/1')
       });
 
-      it('should respond with json');
-      it('should have the status 201');
-      it('should have the id of 1');
+      it('should respond with json', function(done) {
+        req
+          .expect('Content-Type', /json/, done);
+      });
+      it('should have the status 200', function(done) {
+        req
+          .expect(200, done);
+      });
+      it('should have the id of 1', function(done) {
+        req
+          .expect(function(res){
+            if(res.body.id !== 1) {
+              return "Wrong ID";
+            }
+          })
+          .end(done);
+      });
     });
 
     context('when paramters are valid', function() {
-      before(function() {
+      beforeEach(function() {
         req = agent
           .get('/api/committees/2')
       });
 
-      it('should respond with json');
-      it('should have the status 404');
+      it('should respond with json', function(done) {
+        req
+          .expect('Content-Type', /json/, done);
+      });
+      it('should have the status 404', function(done) {
+        req
+          .expect(404, done);
+      });
     });
   });
 
   describe('PUT /:id', function() {
 
     context('when paramters are valid', function() {
-      before(function() {
+      beforeEach(function() {
         req = agent
           .put('/api/committees/1')
           .send({ name: 'events'});
@@ -151,7 +171,7 @@ describe('/api/committtees', function() {
     });
 
     context('when paramters are not valid', function() {
-      before(function() {
+      beforeEach(function() {
         req = agent
           .put('/api/committees/1')
           .send();
@@ -164,7 +184,7 @@ describe('/api/committtees', function() {
 
   describe('DELETE /:id', function() {
 
-    before(function() {
+    beforeEach(function() {
       req = agent.delete('/api/committees/1');
     });
 
