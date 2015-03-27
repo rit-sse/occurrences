@@ -1,10 +1,8 @@
 function ical(events) {
   var arr = [];
   var gen = calendar(events);
-  while(true) {
-    var line = gen.next();
-    if(line.done) { break }
-    arr.push(line.value);
+  for(var line of gen) {
+    arr.push(line);
   }
   return arr.join('\n');
 }

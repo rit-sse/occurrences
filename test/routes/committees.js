@@ -4,16 +4,17 @@ var request = require('supertest');
 var app = require('../../app.js');
 var connectToDb = require('../helper');
 
-app.models = {};
+var models = {};
 var agent = request(app);
 var expect = chai.expect;
 var req;
 
-describe('/api/committtees', function() {
+describe('/api/committees', function() {
 
-  connectToDb(app.models);
+  connectToDb(models);
 
   beforeEach(function(){
+    app.models = models; //annoyance
     return app
       .models
       .committee
@@ -29,10 +30,12 @@ describe('/api/committtees', function() {
       req
         .expect('Content-Type', /json/, done);
     });
+
     it('should have the status 200', function(done) {
       req
         .expect(200, done);
     });
+
     it('should be of length 1', function(done) {
       req
         .expect(function(res){

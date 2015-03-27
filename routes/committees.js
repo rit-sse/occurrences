@@ -24,7 +24,7 @@ router
         .catch(function(err){
           err.status = 422;
           next(err);
-        })
+        });
     });
 
 router
