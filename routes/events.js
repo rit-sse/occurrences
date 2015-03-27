@@ -116,19 +116,54 @@ router
       });
     })
     .post(function(req, res, next) {
-
+      req.models
+        .event
+        .create(req.body.event)
+        .then(function(event){
+          res.status(201).send(event);
+        })
+        .catch(function(err){
+          err.status = 422;
+          next(err);
+        });
     });
 
 router
   .route('/:id')
     .get(function(req, res, next) {
-
+      req.models
+        .event
+        .findOne(req.params.id)
+        .then(function(event){
+          if(!event) {
+            next({
+              status: 404,
+              message: 'Event with id ' + req.params.id + ' not found'
+            });
+          } else {
+            res.send(event);
+          }
+        });
     })
     .put(function(req, res, next) {
-
+      req.models
+        .event
+        .update(req.params.id, req.body.event)
+        .then(function(event){
+          res.status(201).send(event);
+        })
+        .catch(function(err){
+          err.status = 422;
+          next(err);
+        });
     })
     .delete(function(req, res, next) {
-
+      req.models
+        .event
+        .destroy(req.params.id)
+        .then(function(){
+          res.status(204).send();
+        })
     });
 
 module.exports = router;
