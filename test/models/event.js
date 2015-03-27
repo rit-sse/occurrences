@@ -8,7 +8,7 @@ var events = require('../fixtures/events');
 var eventParams;
 var committee;
 
-var ical = require('../../helpers/ical')
+var csv = require('../../helpers/csv')
 
 describe('Event', function() {
   connectToDb(models);
