@@ -5,13 +5,15 @@ var connect = require('../config/waterline');
 
 app.set('port', process.env.PORT || 3000);
 
-connect(function(err, models) {
-  if(err) throw err;
+connect()
+  .then(function(models) {
+    app.models = models.collections;
+    app.connections = models.connections;
 
-  app.models = models.collections;
-  app.connections = models.connections;
-
-  var server = app.listen(app.get('port'), function() {
-    console.log('Express server listening on port ' + server.address().port);
+    var server = app.listen(app.get('port'), function() {
+      console.log('Express server listening on port ' + server.address().port);
+    });
+  })
+  .catch(function(err){
+    throw err;
   });
-});

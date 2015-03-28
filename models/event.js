@@ -38,8 +38,16 @@ var Event = Waterline.Collection.extend({
     },
     short_description: {
       type: 'string',
-      minLength: 40,
-      maxLength: 70,
+      minLength: function() {
+        if(this.featured) {
+          return 40;
+        } else {
+          return 0; //Validator breaks when minLength is undefined
+        }
+      },
+      maxLength: function() {
+        if(this.featured) return 70; // But it doesn't for max length...
+      },
       required: function() {
         return this.featured;
       }

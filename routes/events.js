@@ -64,7 +64,7 @@ router
           req.query.limit = 1000;
         }
 
-        if(!req.query.end_date) {
+        if(req.query.end_date) {
           eventsPromise = req
             .models
             .event
@@ -72,7 +72,7 @@ router
               where: {
                 start_date: {
                   greaterThanOrEqual: req.query.start_date,
-                  lessThanOrEqual: req.query.end_date
+                  lessThanOrEqual: moment(req.query.end_date).add(1, 'day').toDate()
                 }
               },
               limit: req.query.limit,
@@ -85,8 +85,7 @@ router
             .find({
               where: {
                 start_date: {
-                  greaterThanOrEqual: req.query.start_date,
-                  lessThanOrEqual: req.query.end_date
+                  greaterThanOrEqual: req.query.start_date
                 }
               },
               limit: req.query.limit,

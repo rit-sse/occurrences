@@ -85,39 +85,6 @@ describe('Event', function() {
     });
   });
 
-  describe('short_description', function() {
-    beforeEach(function(){
-      eventParams = new events.UnfeaturedEvent(committee);
-    });
-
-    context('when not present', function() {
-      it('should save', function() {
-        eventParams.short_description = null;
-        var ePromise = models.event.create(eventParams);
-
-        return expect(ePromise).to.eventually.be.ok;
-      });
-    });
-
-    context('when length is less than 40', function() {
-      it('should not save', function() {
-        eventParams.short_description = 'something';
-        var ePromise = models.event.create(eventParams);
-
-        return expect(ePromise).to.eventually.be.rejected;
-      });
-    });
-
-    context('when length is greater than 70', function(){
-      it('should not save', function() {
-        eventParams.short_description = 'This is an unnecessarily long short description. So long it is insane in the membrane. Neat party trick';
-        var ePromise = models.event.create(eventParams);
-
-        return expect(ePromise).to.eventually.be.rejected;
-      });
-    });
-  });
-
   describe('featured', function() {
 
     context('when true', function() {
@@ -134,12 +101,32 @@ describe('Event', function() {
         });
       });
 
-      context('when short_description is not present', function() {
-        it('should not save', function() {
-          eventParams.short_description = null;
-          var ePromise = models.event.create(eventParams);
+      context('when short_description', function(){
+        context('when not present', function() {
+          it('should not save', function() {
+            eventParams.short_description = null;
+            var ePromise = models.event.create(eventParams);
 
-          return expect(ePromise).to.eventually.be.rejected;
+            return expect(ePromise).to.eventually.be.rejected;
+          });
+        });
+
+        context('when length is less than 40', function() {
+          it('should not save', function() {
+            eventParams.short_description = 'something';
+            var ePromise = models.event.create(eventParams);
+
+            return expect(ePromise).to.eventually.be.rejected;
+          });
+        });
+
+        context('when length is greater than 70', function(){
+          it('should not save', function() {
+            eventParams.short_description = 'This is an unnecessarily long short description. So long it is insane in the membrane. Neat party trick';
+            var ePromise = models.event.create(eventParams);
+
+            return expect(ePromise).to.eventually.be.rejected;
+          });
         });
       });
     });
@@ -158,12 +145,33 @@ describe('Event', function() {
         });
       });
 
-      context('when short_description is not present', function() {
-        it('should save', function() {
-          eventParams.short_description = null;
-          var ePromise = models.event.create(eventParams);
 
-          return expect(ePromise).to.eventually.be.ok;
+      context('when short_description', function(){
+        context('when not present', function() {
+          it('should save', function() {
+            eventParams.short_description = null;
+            var ePromise = models.event.create(eventParams);
+
+            return expect(ePromise).to.eventually.be.ok;
+          });
+        });
+
+        context('when length is less than 40', function() {
+          it('should save', function() {
+            eventParams.short_description = 'something';
+            var ePromise = models.event.create(eventParams);
+
+            return expect(ePromise).to.eventually.be.ok;
+          });
+        });
+
+        context('when length is greater than 70', function(){
+          it('should save', function() {
+            eventParams.short_description = 'This is an unnecessarily long short description. So long it is insane in the membrane. Neat party trick';
+            var ePromise = models.event.create(eventParams);
+
+            return expect(ePromise).to.eventually.be.ok;
+          });
         });
       });
     });

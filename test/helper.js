@@ -8,15 +8,17 @@ chai.use(chaiAsPromised);
 var connections;
 
 module.exports = function(m) {
-  beforeEach(function(done){
-    connect(function(err, models) {
-      if(err) throw err;
-      connections = models.connections;
-      for(var key in models.collections) {
-        m[key] = models.collections[key];
-      }
-      done();
-    });
+  beforeEach(function(){
+    return connect()
+      .then(function(models) {
+        connections = models.connections;
+        for(var key in models.collections) {
+          m[key] = models.collections[key];
+        }
+      })
+      .catch(function(err){
+        throw err;
+      })
   });
 
   afterEach(function(done){

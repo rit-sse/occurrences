@@ -23,6 +23,17 @@ var config = {
   }
 };
 
-module.exports = function(callback) {
-  orm.initialize(config, callback);
+module.exports = function() {
+  return new Promise(function (resolve, reject) {
+    var callback = function(err, models) {
+      if(err) {
+        reject(err);
+      } else {
+        resolve(models);
+      }
+    }
+
+    orm.initialize(config, callback);
+  });
+
 }
