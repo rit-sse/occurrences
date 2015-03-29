@@ -1,0 +1,17 @@
+{
+  "production": {
+    "adapter": "postgres",
+    "database": "events_production",
+    "pool": 5,
+    "username": "wtf"
+  },
+
+  "development": {
+    "adapter": "disk",
+    "filePath": "db/tmp-dev/"
+  },
+
+  "test": {
+    "adapter": "memory"
+  }
+}
