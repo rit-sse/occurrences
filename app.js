@@ -12,7 +12,7 @@ var app = module.exports = express();
 var keys = require('./helpers/keys');
 
 app.use(cors());
-app.use(jwt({secret: keys.pub}).unless({method: 'GET', path: ['/api/token'] }));
+app.use(jwt({algorithms: ['RS256','RS384','RS512' ], secret: keys.pub}).unless({method: 'GET', path: ['/api/token'] }));
 if(env === 'development') {
   app.use(logger('dev'));
 }
