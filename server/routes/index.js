@@ -7,6 +7,6 @@ module.exports = function() {
   app.use('/api/events', require('./events'));
   app.use('/api/committees', require('./committees'));
   app.use(function(req, res, next) {
-    res.sendFile(path.join(__dirname, '..', 'dist', 'index.html'));
+    res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
   });
 }
