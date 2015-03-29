@@ -1,4 +1,5 @@
 module.exports = {
   Token: require('./token'),
-  Event: require('./event')
+  Event: require('./event'),
+  Committee: require('./committee')
 }

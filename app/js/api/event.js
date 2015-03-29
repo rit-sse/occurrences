@@ -1,12 +1,12 @@
 var core = require('./core');
 var url = require('./config').apiUrl;
-var baseEndpoint = `${url}/event`;
+var baseEndpoint = `${url}/events`;
 var Qs = require('qs');
 
-var Event {
+var Event = {
 
   all(query) {
-    return core.get(`${baseEndpoint}?${Qs.stringify(query)});
+    return core.get(`${baseEndpoint}?${Qs.stringify(query)}`);
   },
 
   one(id) {
@@ -18,7 +18,7 @@ var Event {
   },
 
   update(id, event) {
-    return core.put(`${baseEndpoint}/${id}`, event);
+    return core.put(`${baseEndpoint}/${id}`, { event });
   },
 
   destroy(id) {
