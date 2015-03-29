@@ -8,7 +8,7 @@
 
   "development": {
     "adapter": "disk",
-    "filePath": "db/tmp-dev/"
+    "filePath": "server/db/tmp-dev/"
   },
 
   "test": {
