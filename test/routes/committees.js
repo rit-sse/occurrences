@@ -8,6 +8,7 @@ var models = {};
 var agent = request(app);
 var expect = chai.expect;
 var req;
+var token;
 
 describe('/api/committees', function() {
 
@@ -20,6 +21,16 @@ describe('/api/committees', function() {
       .committee
       .create({ name: 'committee' });
   });
+
+  before(function(done){
+    agent
+      .post('/api/token')
+      .send({ username: 'admin', password: 'admin' })
+      .end(function(err, res){
+        token = res.body.token;
+        done();
+      })
+  })
 
   describe('GET /', function() {
     beforeEach(function() {
@@ -52,6 +63,7 @@ describe('/api/committees', function() {
       beforeEach(function() {
         req = agent
           .post('/api/committees')
+          .set('Authorization', 'Bearer ' + token)
           .send({ committee: { name: 'events' } });
       });
 
@@ -86,6 +98,7 @@ describe('/api/committees', function() {
       beforeEach(function() {
         req = agent
           .post('/api/committees')
+          .set('Authorization', 'Bearer ' + token)
           .send({ committee: {} });
       });
       it('should respond with json', function(done) {
@@ -165,6 +178,7 @@ describe('/api/committees', function() {
       beforeEach(function() {
         req = agent
           .put('/api/committees/1')
+          .set('Authorization', 'Bearer ' + token)
           .send({ committee: { name: 'events'} });
       });
 
@@ -199,6 +213,7 @@ describe('/api/committees', function() {
       beforeEach(function() {
         req = agent
           .put('/api/committees/1')
+          .set('Authorization', 'Bearer ' + token)
           .send({ committee: { name: 'committee'}});
       });
       it('should respond with json', function(done) {
@@ -215,7 +230,9 @@ describe('/api/committees', function() {
   describe('DELETE /:id', function() {
 
     beforeEach(function() {
-      req = agent.delete('/api/committees/1');
+      req = agent
+        .delete('/api/committees/1')
+        .set('Authorization', 'Bearer ' + token);
     });
 
     it('should have status 204', function(done) {

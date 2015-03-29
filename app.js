@@ -3,15 +3,16 @@ var bodyParser = require('body-parser');
 var logger = require('morgan');
 var cors = require('cors');
 var jwt = require('express-jwt');
-var fs = require('fs');
 var mime = require('mime');
 
 var env = process.env.NODE_ENV || 'development';
 
 var app = module.exports = express();
 
+var keys = require('./helpers/keys');
+
 app.use(cors());
-// app.use(jwt({secret: pub}).unless({path: ['/token']}));
+app.use(jwt({algorithms: ['RS256','RS384','RS512' ], secret: keys.pub}).unless({method: 'GET', path: ['/api/token'] }));
 if(env === 'development') {
   app.use(logger('dev'));
 }
@@ -51,9 +52,11 @@ app.use(function(err, req, res, next) {
     res.status(err.status || 500).send('internal server error!');
   }
   else {
-    if(env === 'development') {
-      console.log(err.stack);
+    if(env === 'development' && err.stack) {
+      console.error(err.stack);
     }
-    res.status(err.status || 500).send(err);
+    var status = err.status;
+    err.status = undefined;
+    res.status(status || 500).send(err);
   }
 });
