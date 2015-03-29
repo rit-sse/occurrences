@@ -24,6 +24,7 @@
     "body-parser": "^1.12.2",
     "browserify-middleware": "^5.0.2",
     "cors": "^2.5.3",
+    "es6-promise": "^2.0.1",
     "express": "^4.12.3",
     "express-jwt": "^2.1.0",
     "fluxxor": "^1.5.2",
@@ -39,7 +40,8 @@
     "sails-disk": "^0.10.7",
     "sails-memory": "^0.10.3",
     "sails-postgresql": "^0.10.14",
-    "waterline": "^0.10.18"
+    "waterline": "^0.10.18",
+    "whatwg-fetch": "^0.7.0"
   },
   "devDependencies": {
     "chai": "^2.1.2",
