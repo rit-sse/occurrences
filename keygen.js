@@ -2,9 +2,9 @@ var keypair = require('keypair');
 var fs = require('fs');
 
 var pair = keypair();
-fs.writeFile('./secret.pub', pair.public, function() {
-	console.log('Wrote public key to ./secret.pub');
+fs.writeFile('./public.key', pair.public, function() {
+	console.log('Wrote public key to ./public.key');
 });
-fs.writeFile('./secret.key', pair.private, function() {
-	console.log('Wrote private key to ./secret.key');
+fs.writeFile('./private.key', pair.private, function() {
+	console.log('Wrote private key to ./private.key');
 });

@@ -26,7 +26,7 @@ node_modules
 
 # Users Environment Variables
 .lock-wscript
-secret.pub
-secret.key
+public.key
+private.key
 
 db/
