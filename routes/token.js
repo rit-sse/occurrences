@@ -13,7 +13,7 @@ router
   .route('/')
     .post(function(req, res, next){
       function signAndSend(payload) {
-        var response = jwt.sign(payload, keys.secret, {expiresInSeconds: 60, algorithm: 'RS256'});
+        var response = jwt.sign(payload, keys.secret, {expiresInMinutes: 60, algorithm: 'RS256'});
 
         res.send({token: response, exp: new Date((new Date()).getTime() + expiresIn*60000) });
       }

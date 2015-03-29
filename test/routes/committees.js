@@ -8,7 +8,7 @@ var models = {};
 var agent = request(app);
 var expect = chai.expect;
 var req;
-var token = token
+var token;
 
 describe('/api/committees', function() {
 
