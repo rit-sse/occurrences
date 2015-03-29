@@ -10,6 +10,7 @@ module.exports = function() {
   app.use('/api/committees', require('./committees'));
   app.get('/js/main.js', browserify(
     path.join(__dirname, '..', '..', 'app', 'js', 'app.jsx'),{
+      precompile: true,
       extensions: ['.jsx'],
       transform: function(f){
         return reactify(f, {es6: true})
