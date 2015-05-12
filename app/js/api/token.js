@@ -27,6 +27,10 @@ var Token = {
         }, 30*60000);
         return json;
       });
+  },
+
+  remove() {
+    localStorage.removeItem('jwt');
   }
 }
 

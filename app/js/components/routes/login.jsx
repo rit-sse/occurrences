@@ -1,20 +1,39 @@
 var React = require('react');
 var Router = require('react-router');
+var Fluxxor = require('fluxxor');
 
+var FluxMixin = Fluxxor.FluxMixin(React);
 var RouteHandler = Router.RouteHandler;
 var Link = Router.Link;
 
-var App = React.createClass({
+var Login  = React.createClass({
+
+  mixins: [FluxMixin],
+
+  getInitialState() {
+    return {
+      user: {}
+    }
+  },
+
+  submitForm(e) {
+    e.preventDefault();
+    var username = this.refs.username.getDOMNode();
+    var password = this.refs.password.getDOMNode();
+    this.getFlux().actions.auth.login(username.value, password.value);
+    username.value = '';
+    password.value = '';
+  },
 
   render() {
     return (
-      <form className="form-horizontal">
+      <form className="form-horizontal" onSubmit={this.submitForm} >
         <div className="form-group">
           <label htmlFor="username" className="col-sm-2 control-label">
             Username
           </label>
           <div className="col-sm-10">
-            <input type="text" className="form-control" id="username" name="username" placeholder="Username"/>
+            <input type="text" ref="username" className="form-control" id="username" name="username" placeholder="Username" />
           </div>
         </div>
         <div className="form-group">
@@ -22,7 +41,7 @@ var App = React.createClass({
             Password
           </label>
           <div className="col-sm-10">
-            <input type="password" className="form-control" id="password" name="password" placeholder="Password"/>
+            <input type="password" ref="password" className="form-control" id="password" name="password" placeholder="Password" />
           </div>
         </div>
         <div className="form-group">
@@ -35,4 +54,4 @@ var App = React.createClass({
   }
 });
 
-module.exports = App;
+module.exports = Login;
