@@ -26,7 +26,7 @@ var Auth = Fluxxor.createStore({
 
   onLoginFailure(payload) {
     this.data.loading = false;
-    this.data.username = payload.error;
+    this.data.error = payload.err.message;
     this.emit('change');
   },
 
