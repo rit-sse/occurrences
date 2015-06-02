@@ -49,7 +49,10 @@ router
         var username = req.body.username.toLowerCase();
         var user = username + '@ad.sofse.org';
         var password = req.body.password;
-        if((env === 'development' || env === 'test') && password === 'admin' && username === 'admin' ) {
+        if(!password) {
+          next({status: 401, message: 'Invalid Credentials'});
+        }
+        else if((env === 'development' || env === 'test') && password === 'admin' && username === 'admin' ) {
           signAndSend({user: username});
         } else {
           var client = ldap.createClient({
