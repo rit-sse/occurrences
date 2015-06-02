@@ -4,6 +4,7 @@ var logger = require('morgan');
 var cors = require('cors');
 var jwt = require('express-jwt');
 var mime = require('mime');
+var path = require('path');
 
 var env = process.env.NODE_ENV || 'development';
 
@@ -16,6 +17,8 @@ app.use(jwt({algorithms: ['RS256','RS384','RS512' ], secret: keys.pub}).unless({
 if(env === 'development') {
   app.use(logger('dev'));
 }
+
+app.use(express.static(path.join(__dirname, '..', 'dist')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(function(req, res, next){
